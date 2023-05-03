@@ -17,6 +17,9 @@ bool cell::getFood()
     }
     
 }
+void cell::removeFood() {
+    food = food--;
+}
 
 void cell::addFood(int value)
 {

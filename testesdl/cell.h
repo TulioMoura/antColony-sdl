@@ -11,6 +11,7 @@ public:
 
 	bool getFood();
 	void addFood(int value);
+	void removeFood();
 	
 	int getFerA();
 	void addFerA(int value);
