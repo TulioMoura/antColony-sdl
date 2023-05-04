@@ -2,6 +2,8 @@
 #include "environment.h"
 #include <exception>
 #include <math.h>
+#include <iostream>
+
 
 ant::ant(int x, int y, environment* e) {
 	if (x > e->getW() || y > e->getH()) {
@@ -29,7 +31,10 @@ std::vector<int> ant::detect_ferA() {
                 if (i == 0 && j == 0) {
                     continue;
                 }
-                else if (env->getCells()[X + i][Y + j].getFerA()> 1) {
+                else if ((X + i) >= 50 || (X + i) < 0 || (Y + j) < 0 || (Y + j) >= 50) {
+                    continue;
+                }
+                else if (env->getCells(X + i, Y + j)->getFerA()> 1) {
                     std::vector<int> result = {X + i, Y + j};
                     return result ;
                 }
@@ -46,7 +51,10 @@ std::vector<int> ant::detect_ferB() {
             if (i == 0 && j == 0) {
                 continue;
             }
-            else if (env->getCells()[X + i][Y + j].getFerB() > 1) {
+            else if ((X + i) >= 50 || (X + i) < 0 ||(Y+j)< 0 ||(Y+j)>=50) {
+                continue;
+            }
+            else if (env->getCells(X + i,Y + j)->getFerB() > 1) {  //tratar caso em que a posição do agente é a borda, ou seja, X+1 > 50 < 0
                 std::vector<int> result = { X + i, Y + j };
                 return(result);
             }
@@ -57,11 +65,11 @@ std::vector<int> ant::detect_ferB() {
 
 }
 void ant::move_random(){
-    do {
+    
         oldX = X;
         oldY = Y;
-        X = X + round(rand() * 2 - 1);
-        Y = Y + round(rand() * 2 - 1);
+        X =  X + round(rand()%3 - 1); //CORRIGIR
+        Y = Y + round(rand()%3 - 1); //CORRIGIR
             if (X >= env->getW()) {
                 X = env->getW()-1;
             }
@@ -74,7 +82,7 @@ void ant::move_random(){
         if (Y < 0) {
             Y = 0;
         }
-    } while (X == oldX && Y == oldY);
+    
 }
 
 void ant::move_to(int x, int y) {
@@ -99,9 +107,10 @@ int ant::getY()
 }
 
 void ant::action() {
-    if (food == false && env->getCells()[X][Y].getFood() == 0) {
+    //std:: cout << "action executed" << std::endl;
+    if (food == false && env->getCells(X,Y)->getFood() == 0) {
         std::vector<int> fB;
-        env->getCells()[X][Y].addFerA(1);
+        env->getCells(X, Y)->addFerA(1);
         try
         {
             fB = detect_ferB();
@@ -116,15 +125,15 @@ void ant::action() {
         
 
     }
-    else if (food == false && env->getCells()[X][Y].getFood() > 0) {
+    else if (food == false && env->getCells(X, Y)->getFood() > 0) {
         food = true;
-        env->getCells()[X][Y].removeFood();
-        env->getCells()[X][Y].addFerB(1);
+        env->getCells(X, Y)->removeFood();
+        env->getCells(X, Y)->addFerB(1);
     }
     if (food == true) {
-        env->getCells()[X][Y].addFerB(1);
+        env->getCells(X, Y)->addFerB(1);
 
-        if (env->getCells()[X][Y].getHome() == true) {
+        if (env->getCells(X, Y)->getHome() == true) {
             food = false;
         }
         

@@ -33,7 +33,7 @@ int cell::getFerA()
 
 void cell::addFerA(int value)
 {
-    ferA = value;
+    ferA = ferA + value;
 }
 
 int cell::getFerB()
@@ -43,7 +43,7 @@ int cell::getFerB()
 
 void cell::addFerB(int value)
 {
-    ferB = value;
+    ferB = ferB+value;
 }
 
 

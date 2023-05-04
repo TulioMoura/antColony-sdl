@@ -45,6 +45,6 @@ void environment::decay(int s) {
     }
 }
 
-std::vector<std::vector<cell>> environment::getCells() {
-    return cells;
+cell* environment::getCells(int x, int y) {
+        return ((cells.data() + x)->data() + y);
 }

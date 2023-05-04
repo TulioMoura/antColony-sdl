@@ -1,5 +1,6 @@
 #pragma once
 #include"environment.h"
+#include<iostream>
 class ant
 {
 private:

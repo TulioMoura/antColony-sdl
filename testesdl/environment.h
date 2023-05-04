@@ -11,7 +11,7 @@ private:
 public :
 	int getW();
 	int getH();
-	std::vector<std::vector<cell>> getCells();
+	cell* getCells(int x, int y);
 	void setHome(int posx, int posy);
 	void unsetHome(int posx, int posy);
 	void createFood(int posx, int posy);
