@@ -60,3 +60,10 @@ void cell::unsetHome()
 {
     home =  false;
 }
+
+void cell::decay(int s) {
+    ferA = (ferA + s) < 0 ? 0 : ferA + s;
+    ferB - (ferB + s) < 0 ? 0 : ferB + s;
+
+    
+}

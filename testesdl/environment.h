@@ -15,7 +15,8 @@ public :
 	void setHome(int posx, int posy);
 	void unsetHome(int posx, int posy);
 	void createFood(int posx, int posy);
-
+	void decay(int s);
+	environment(int w, int h);
 	
 };
 

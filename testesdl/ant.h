@@ -9,14 +9,16 @@ private:
 	int X;
 	int Y;
 	environment* env;
-	int* detect_ferA();
-	int* detect_ferB();
+	std::vector<int> detect_ferA();
+	std::vector<int> detect_ferB();
 	void move_random();
 	void move_to(int x, int y);
-	ant(int x, int y, environment* e);
+
 public:
-	
-	
+	ant(int x, int y, environment* e);
+	ant();
+	int getX();
+	int getY();
 	void action();
 };
 

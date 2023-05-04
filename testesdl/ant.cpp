@@ -14,8 +14,15 @@ ant::ant(int x, int y, environment* e) {
 	oldY = y;
 	food = false;
 }
-
-int* ant::detect_ferA() {
+ant::ant() {
+    env = nullptr;
+    X = 0;
+    Y = 0;
+    oldX = 0;
+    oldY = 0;
+    food = false;
+}
+std::vector<int> ant::detect_ferA() {
     
         for (int i = -1; i < 2; i++) {
             for (int j = 1; j < 2; j++) {
@@ -23,17 +30,16 @@ int* ant::detect_ferA() {
                     continue;
                 }
                 else if (env->getCells()[X + i][Y + j].getFerA()> 1) {
-                    int result[] = {X + i, Y + j};
-                    return(&result[0]);
+                    std::vector<int> result = {X + i, Y + j};
+                    return result ;
                 }
                 
             }
         }
-        throw new _exception();
+        throw  _exception();
 
-    
 }
-int* ant::detect_ferB() {
+std::vector<int> ant::detect_ferB() {
 
     for (int i = -1; i < 2; i++) {
         for (int j = 1; j < 2; j++) {
@@ -41,14 +47,13 @@ int* ant::detect_ferB() {
                 continue;
             }
             else if (env->getCells()[X + i][Y + j].getFerB() > 1) {
-                int result[] = { X + i, Y + j };
-                return(&result[0]);
+                std::vector<int> result = { X + i, Y + j };
+                return(result);
             }
 
         }
     }
-    throw new _exception();
-
+    throw _exception();
 
 }
 void ant::move_random(){
@@ -83,16 +88,26 @@ void ant::move_to(int x, int y) {
     Y = y;
 }
 
+int ant::getX()
+{
+    return X;
+}
+
+int ant::getY()
+{
+    return Y;
+}
+
 void ant::action() {
     if (food == false && env->getCells()[X][Y].getFood() == 0) {
-        int* fB;
+        std::vector<int> fB;
         env->getCells()[X][Y].addFerA(1);
         try
         {
             fB = detect_ferB();
             move_to(fB[0], fB[1]);
         }
-        catch (const std::exception&)
+        catch (const _exception)
         {
             move_random();
         }
@@ -114,14 +129,14 @@ void ant::action() {
         }
         
         else {
-            int* fA;
+            std::vector<int> fA;
 
             try
             {
                 fA = detect_ferA();
                 move_to(fA[0], fA[1]);
             }
-            catch (const std::exception&)
+            catch (const _exception)
             {
                 move_random();
             }

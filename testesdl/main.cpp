@@ -1,7 +1,67 @@
 #include <iostream>
-
+#include "ant.h"
+#include "environment.h"
 #include <SDL.h>
+#include <vector>
+const int env_size_x = 50;
+const int env_size_y = 50;
+const int ant_qtd =100;
+const int home_x = 25;
+const int home_y = 25;
 
+
+
+std::vector<ant> ant_arr;
+
+environment env = environment(env_size_x, env_size_y);
+
+void execute(std::vector<ant> a) {
+	for (int i = 0; i < a.size(); i++) {
+		a[i].action();
+	}
+}
+
+void render(SDL_Surface* s, std::vector<ant> ants, environment * env) {
+	int env_h = env->getH();
+	int env_w = env->getW();
+	double pixel_h = s->h/env_h;
+	double pixel_w = s->w/env_w;
+
+	SDL_FillRect(s, NULL, SDL_MapRGBA(s->format, 0xff, 0xff, 0xff, 0xff));
+
+	for (int i = 0; i < env_h; i++) {
+		for (int j = 0; j < env_w; j++) {
+
+			SDL_Rect * pixel = new SDL_Rect();
+			pixel->h = pixel_h;
+			pixel->w = pixel_w;
+			pixel->x = j * pixel_h;
+			pixel->y = i * pixel_w;
+			if (env->getCells()[i][j].getHome()) {
+				SDL_FillRect(s, pixel , SDL_MapRGBA(s->format, 0xeb, 0x34, 0x34, 0xff));
+			}
+			else if (env->getCells()[i][j].getFood() > 0) {
+				SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0xeb, 0x34, 0xde, 0xff));
+			}
+			else if (env->getCells()[i][j].getFerA() > 0) {
+				SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x34, 0xeb, 0x5e, 0xff));
+			}
+			else if (env->getCells()[i][j].getFerB() > 0) {
+				SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x34, 0x64, 0xeb, 0xff));
+			}
+		}
+	}
+	for (int i = 0; i < ants.size(); i++) {
+		SDL_Rect* pixel = new SDL_Rect();
+		pixel->h = pixel_h;
+		pixel->w = pixel_w;
+		pixel->x = ants[i].getY() * pixel_h;
+		pixel->y = ants[i].getX() * pixel_w;
+
+		SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x00, 0x00, 0x00, 0xff));
+	}
+
+}
 
 int main(int argc, char* argv[])
 {
@@ -20,6 +80,15 @@ int main(int argc, char* argv[])
 	 SDL_Event event;
 	 bool quit = false;
 
+	 //initialize ant array and environment;
+	 ant_arr.resize(ant_qtd);
+	 for (int i = 0; i < ant_qtd; i++) {
+		 ant_arr[i] = ant(home_x, home_y , &env);
+	 }
+	 env.setHome(home_x, home_y);
+	 env.createFood(15, 15);
+	 
+
 	 //start code here
 
 	 while (!quit) {
@@ -28,7 +97,8 @@ int main(int argc, char* argv[])
 				 quit = true;
 			 }
 		 }
-
+		 execute(ant_arr);
+		 render(screenSurface, ant_arr, &env);
 		 SDL_UpdateWindowSurface(window);
 	 }
 

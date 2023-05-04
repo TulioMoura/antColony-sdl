@@ -19,6 +19,8 @@ public:
 	int getFerB();
 	void addFerB(int value);
 
+	void decay(int s);
+
 	void setHome();
 	bool getHome();
 	void unsetHome();
