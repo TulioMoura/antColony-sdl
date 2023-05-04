@@ -49,7 +49,6 @@ void render(SDL_Surface* s, std::vector<ant> ants, environment * env) {
 			}
 			else if (env->getCells(i, j)->getFerA() > 0) {
 				SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x34, 0xeb, 0x5e, 0xff));
-				std::cout << "ferA";
 			}
 			else if (env->getCells(i, j)->getFerB() > 0) {
 				SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x34, 0x64, 0xeb, 0xff));
@@ -63,7 +62,7 @@ void render(SDL_Surface* s, std::vector<ant> ants, environment * env) {
 		pixel->x = ants[i].getY() * pixel_h;
 		pixel->y = ants[i].getX() * pixel_w;
 		//std::cout << ants[i].getX();
-		SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x00, 0xff, 0x00, 0xff));
+		SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x00, 0x00, 0x00, 0xff));
 	}
 }
 
