@@ -24,6 +24,7 @@
     <ProjectGuid>{5ab58962-ebe7-452d-bc20-4ccf1d293a2f}</ProjectGuid>
     <RootNamespace>testesdl</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Ant Colony - SDL</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
