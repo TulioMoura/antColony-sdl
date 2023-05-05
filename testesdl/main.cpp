@@ -25,12 +25,11 @@ void execute(std::vector<ant> *a) {
 
 void render(SDL_Surface* s, std::vector<ant> ants, environment * env) {
 
+	SDL_FillRect(s, NULL, SDL_MapRGBA(s->format, 0xff, 0xff, 0xff, 0xff));
 	int env_h = env->getH();
 	int env_w = env->getW();
 	double pixel_h = s->h/env_h;
-	double pixel_w = s->w/env_w;
-
-	SDL_FillRect(s, NULL, SDL_MapRGBA(s->format, 0xff, 0xff, 0xff, 0xff));
+	double pixel_w = s->w/env_w;;
 
 	for (int i = 0; i < env_h; i++) {
 		for (int j = 0; j < env_w; j++) {
@@ -53,7 +52,7 @@ void render(SDL_Surface* s, std::vector<ant> ants, environment * env) {
 			else if (env->getCells(i, j)->getFerB() > 0) {
 				SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x34, 0x64, 0xeb, 0xff));
 			}
-			SDL_free(&pixel);
+			delete pixel;
 		}
 	}
 	for (int i = 0; i < ants.size(); i++) {
@@ -64,7 +63,7 @@ void render(SDL_Surface* s, std::vector<ant> ants, environment * env) {
 		pixel->y = ants[i].getX() * pixel_w;
 		//std::cout << ants[i].getX();
 		SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x00, 0x00, 0x00, 0xff));
-		SDL_free(&pixel);
+		delete pixel;
 	}
 }
 
@@ -106,7 +105,7 @@ int main(int argc, char* argv[])
 		 render(screenSurface, ant_arr, &env);
 		 SDL_UpdateWindowSurface(window);
 		 decay_meter++;
-		 if (decay_meter % 20 == 0) {
+		 if (decay_meter % 4 == 0) {
 			 decay_meter = 0;
 			 env.decay(1);
 			 //std::cout << "decay\n";

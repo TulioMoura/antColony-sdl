@@ -27,7 +27,7 @@ ant::ant() {
 std::vector<int> ant::detect_ferA() {
     
         for (int i = -1; i < 2; i++) {
-            for (int j = 1; j < 2; j++) {
+            for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) {
                     continue;
                 }
@@ -71,13 +71,13 @@ void ant::move_random(){
         X = X + round(rand() % 3 - 1); //CORRIGIR
         Y = Y + round(rand() % 3 - 1); //CORRIGIR
         if (X >= env->getW()) {
-            X = env->getW() -1;
+            X = env->getW() -2;
         }
         if (X < 0) {
             X = 0;
         }
         if (Y >= env->getH()) {
-            Y = env->getH() -1;
+            Y = env->getH() -2;
         }
         if (Y < 0) {
             Y = 0;
