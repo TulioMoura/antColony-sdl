@@ -53,6 +53,7 @@ void render(SDL_Surface* s, std::vector<ant> ants, environment * env) {
 			else if (env->getCells(i, j)->getFerB() > 0) {
 				SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x34, 0x64, 0xeb, 0xff));
 			}
+			SDL_free(&pixel);
 		}
 	}
 	for (int i = 0; i < ants.size(); i++) {
@@ -63,6 +64,7 @@ void render(SDL_Surface* s, std::vector<ant> ants, environment * env) {
 		pixel->y = ants[i].getX() * pixel_w;
 		//std::cout << ants[i].getX();
 		SDL_FillRect(s, pixel, SDL_MapRGBA(s->format, 0x00, 0x00, 0x00, 0xff));
+		SDL_free(&pixel);
 	}
 }
 
@@ -104,9 +106,10 @@ int main(int argc, char* argv[])
 		 render(screenSurface, ant_arr, &env);
 		 SDL_UpdateWindowSurface(window);
 		 decay_meter++;
-		 if (decay_meter % 3 == 0) {
+		 if (decay_meter % 20 == 0) {
 			 decay_meter = 0;
 			 env.decay(1);
+			 //std::cout << "decay\n";
 		 }
 
 	 }

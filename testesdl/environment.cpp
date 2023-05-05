@@ -32,6 +32,12 @@ int environment::getW() {
 
 void environment::setHome(int posx, int posy) {
     cells[posx][posy].setHome();
+    cells[posx + 1][posy + 1].setHome();
+    cells[posx - 1][posy - 1].setHome();
+    cells[posx + 1][posy].setHome();
+    cells[posx - 1][posy].setHome();
+    cells[posx][posy - 1].setHome();
+    cells[posx][posy + 1].setHome();
 }
 void environment::unsetHome(int posx, int posy) {
     cells[posx][posy].unsetHome();
