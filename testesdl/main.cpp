@@ -89,8 +89,10 @@ int main(int argc, char* argv[])
 	 for (int i = 0; i < ant_qtd; i++) {
 		 ant_arr[i] = ant(home_x, home_y , &env);
 	 }
-	 env.setHome(home_x, home_y);
-	 env.createFood(15, 15);
+	 env.setHome(home_x, home_y,5);
+	 env.createFood(10, 10,4);
+	 env.createFood(25, 25, 4);
+	 env.createFood(35, 35, 3);
 	 
 
 	 //start code here
@@ -105,7 +107,7 @@ int main(int argc, char* argv[])
 		 render(screenSurface, ant_arr, &env);
 		 SDL_UpdateWindowSurface(window);
 		 decay_meter++;
-		 if (decay_meter % 4 == 0) {
+		 if (decay_meter % 8 == 0) {
 			 decay_meter = 0;
 			 env.decay(1);
 			 //std::cout << "decay\n";

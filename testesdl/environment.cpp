@@ -1,14 +1,22 @@
 #include "environment.h"
 #include "cell.h"
+#include <cmath>
 #include <vector>
-void environment::createFood(int posx,int  posy) {
-    cells[posx][posy].addFood(20);
-    cells[posx + 1][posy + 1].addFood(20);
-    cells[posx - 1][posy - 1].addFood(20);
-    cells[posx + 1][posy].addFood(20);
-    cells[posx - 1][posy].addFood(20);
-    cells[posx][posy - 1].addFood(20);
-    cells[posx][posy + 1].addFood(20);
+void environment::createFood(int posx,int  posy,int r) {
+    int xLowLim = ((posx - r) < 0) ? 0 : posx - r;
+    int xUpLim = ((posx + r) > width) ? width : posx + r;
+    int yLowLim = ((posy - r) < 0) ? 0 : posy - r;
+    int yUpLim = ((posy + r) > height) ? height : posy + r;
+    for (int i = yLowLim; i < yUpLim; i++) {
+        for (int j = xLowLim; j < xUpLim; j++) {
+            int x = std::pow(std::abs(j - posx), 2);
+            int y = std::pow(std::abs(i - posy), 2);
+            int h = std::sqrt(x + y);
+            if (h < r) {
+                cells[i][j].addFood(5);
+            }
+        }
+    }
 }
 
 environment::environment(int w, int h) {
@@ -30,14 +38,21 @@ int environment::getW() {
     return width;
 }
 
-void environment::setHome(int posx, int posy) {
-    cells[posx][posy].setHome();
-    cells[posx + 1][posy + 1].setHome();
-    cells[posx - 1][posy - 1].setHome();
-    cells[posx + 1][posy].setHome();
-    cells[posx - 1][posy].setHome();
-    cells[posx][posy - 1].setHome();
-    cells[posx][posy + 1].setHome();
+void environment::setHome(int posx, int posy,int r) {
+    int xLowLim = ((posx - r) < 0) ? 0 : posx - r;
+    int xUpLim = ((posx + r) > width) ? width : posx + r;
+    int yLowLim = ((posy - r) < 0) ? 0 : posy - r;
+    int yUpLim = ((posy + r) > height) ? height : posy + r;
+    for (int i = yLowLim; i < yUpLim; i++) {
+        for (int j = xLowLim; j < xUpLim; j++) {
+            int x = std::pow(std::abs(j - posx), 2);
+            int y = std::pow(std::abs(i - posy), 2);
+            int h = std::sqrt(x + y);
+            if (h < r) {
+                cells[i][j].setHome();
+            }
+        }
+    }
 }
 void environment::unsetHome(int posx, int posy) {
     cells[posx][posy].unsetHome();

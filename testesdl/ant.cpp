@@ -128,7 +128,7 @@ void ant::action() {
     else if (food == false && env->getCells(X, Y)->getFood() > 0) {
         food = true;
         env->getCells(X, Y)->removeFood();
-        env->getCells(X, Y)->addFerA(1);
+        env->getCells(X, Y)->addFerB(1);
     }
     else if (food == true) {
         env->getCells(X, Y)->addFerB(1);
